@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Navbar from "./components/header/Navbar";
+import "./App.css";
+import Hero from "./components/hero/Hero";
+import Main from "./components/main/Main";
+import Home from "./pages/Home";
+import CartPage from "./pages/CartPage";
+
+import Footer from "./components/footer/Footer";
+import Scrollbtn from "./Scroll/Scrollbtn";
 
 function App() {
+  const [theme, colorMode] = useMode();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Home /> <Hero />
+                  <Main />
+                  <Scrollbtn />
+                </>
+              }
+            />
+              
+          
+             
+              <Route path="cart" element={<CartPage />} />
+            
+            
+          </Routes>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
